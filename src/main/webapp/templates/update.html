@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/jquery.form.js"></script>
+    <script>
+        $(function () {
+            var url=window.location.href;
+            var index=url.indexOf("?");
+            var value=url.substring(index,url.length);
+            $.ajax({
+                url:"/selectbyid"+value,
+                type:"get",
+                dataType:"json",
+                success:function (data) {
+                    alert(data.name);
+                    $("#form").append("<div class=\"form-group\">\n" +
+                        "    <label for=\"name\">name</label>\n" +
+                        "    <input type=\"text\" class=\"form-control\" name=\"name\" placeholder=\"name\" value=\""+data.name+"\">\n" +
+                        "    <input type=\"text\" name=\"id\" value=\""+data.id+"\" hidden=\"hidden\">\n" +
+                        "  </div>\n" +
+                        "  <div class=\"form-group\">\n" +
+                        "    <label for=\"pwd\">pwd</label>\n" +
+                        "    <input type=\"password\" class=\"form-control\" name=\"pwd\" placeholder=\"pwd\" value=\""+data.pwd+"\">\n" +
+                        "  </div>\n" +
+                        "  <button type=\"submit\" class=\"btn btn-default\">Submit</button>")
+                }
+            })
+
+            $("#form").bind("submit", function() {
+
+                $(this).ajaxSubmit({
+                    resetForm: true, //成功提交后，重置所有表单元素的值
+                    //type: 'PUT',//GET、POST、DELETE
+                    // beforeSubmit: function(arr, $form, options) {
+                    // },
+                    //提交成功后的回调函数
+                    success: function(data, status, xhr, $form) {
+                        alert(data);
+                    }
+                });
+                return false; //阻止表单默认提交
+            });
+
+        })
+
+    </script>
+
+</head>
+<body>
+<form action="update" method="post" id="form">
+</form>
+</body>
+</html>

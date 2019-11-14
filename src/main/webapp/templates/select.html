@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-1.12.4.js"></script>
+    <!--<script src="../js/jquery.form.js"></script>-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <script>
+        $(function() {
+            $.ajax({
+                url:"/select",
+                type:"get",
+                dataType:"json",
+                success:function (data) {
+                    $.each(data,function (i,data) {
+                        $("#table").append("<tr><td>"+data.name+"</td><td>"+data.pwd+"</td>" +
+                            "<td>"+data.sex+"</td><td><a href='/templates/update.html?id="+data.id+"'"+">修改</a>&nbsp;&nbsp;<a href='/delect'>删除</a></td>")
+                    })
+                }
+            })
+
+        });
+
+    </script>
+</head>
+<body>
+    <table class="table" id="table">
+        <tr>
+            <td>用户名</td>
+            <td>密码</td>
+            <td>性别</td>
+            <td>操作</td>
+        </tr>
+    </table>
+
+</body>
+</html>
